@@ -1,0 +1,25 @@
+{
+  "name": "bubbles",
+  "version": "1.0.0",
+  "description": "Realtime data analisys tools",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dvdtoth/bubbles.git"
+  },
+  "author": "David Toth @dvdtoth",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dvdtoth/bubbles/issues"
+  },
+  "homepage": "https://github.com/dvdtoth/bubbles",
+  "dependencies": {
+    "socket.io": "^1.3.2",
+    "twit": "^1.1.19",
+    "vis": "^3.9.1",
+    "vivagraphjs": "^0.6.2"
+  }
+}
