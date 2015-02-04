@@ -59,14 +59,23 @@ $(function() {
   // Display new node
   function showNewTweet(data) {
 
-  console.log(data.user.name);
-//  $('body').append('<div>' + data.user.name + '</div>');
-  nodes.add([
-    {id: data.user.id, label: data.user.name},
-  ]);
-  edges.add([{from: 1, to: data.user.id}]);
-//  edges.add([{from: prev, to: data.user.id}]);
-//  prev = data.user.id;
+    console.log(data.user.name);
+    var words = data.text.split(" ");
+    words.forEach(function(word) {
+
+    console.log(word);
+    if (word.length > 5 && word.indexOf("@") === -1 && word.indexOf("http") === -1) {
+      try {
+        nodes.add([
+          {id: word, label: word},
+        ]);
+
+        edges.add([{from: 1, to: word}]);
+      }
+      catch (e){
+      }
+    }
+  });
   }
 
   // Listener for new tweet events
