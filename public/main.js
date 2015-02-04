@@ -62,21 +62,59 @@ $(function () {
     // Display new node
     function showNewTweet(data) {
 
-        //console.log(data.user.name);
+        // Add twitter users with avatar
         tids.push(data.user.id);
         nodes.update([
             {id: data.user.id, label: data.user.name, image: data.user.profile_image_url, shape: 'image'}
         ]);
         edges.add([{from: 1, to: data.user.id}]);
-        //edges.add([{from: prev, to: data.user.id}]);
+
         prev = data.user.id;
 
-        //console.log(tids);
+        // Add words and connect of users
+        var words = data.text.split(" ");
+        words.forEach(function (word) {
+
+            console.log(word);
+
+            if (word.length > 5 && word.indexOf("@") === -1 && word.indexOf("http") === -1) {
+                try {
+                    nodes.add([
+                        {id: word, label: word},
+                    ]);
+                    edges.add([{from: data.user.id, to: word}]);
+                }
+                catch (e) {
+                }
+            }
+        });
+
+    }
+
+    function showNewWords(data) {
+
+        console.log(data.user.name);
+        var words = data.text.split(" ");
+        words.forEach(function (word) {
+
+            console.log(word);
+            if (word.length > 5 && word.indexOf("@") === -1 && word.indexOf("http") === -1) {
+                try {
+                    nodes.add([
+                        {id: word, label: word},
+                    ]);
+                    edges.add([{from: 2, to: word}]);
+                }
+                catch (e) {
+                }
+            }
+        });
     }
 
     // Listener for new tweet events
     socket.on('tweet', function (data) {
         showNewTweet(data);
+        showNewWords(data);
     });
 
 });
