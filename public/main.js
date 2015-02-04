@@ -6,21 +6,11 @@ $(function () {
     // create an array with nodes
     var nodes = new vis.DataSet();
     nodes.add([
-        {id: 1, label: 'Node 1'},
-        {id: 2, label: 'Node 2'},
-        {id: 3, label: 'Node 3'},
-        {id: 4, label: 'Node 4'},
-        {id: 5, label: 'Node 5'}
+        {id: 1, label: 'Keyword'},
     ]);
 
     // create an array with edges
     var edges = new vis.DataSet();
-    edges.add([
-        {from: 1, to: 2},
-        {from: 1, to: 3},
-        {from: 2, to: 4},
-        {from: 2, to: 5}
-    ]);
 
     // create a network
     var container = document.getElementById('graphContainer');
@@ -54,6 +44,7 @@ $(function () {
             clusterLevelDifference: 2
         }
     };
+
     var network = new vis.Network(container, data, options);
 
     var prev = 1;
@@ -82,39 +73,19 @@ $(function () {
                     nodes.add([
                         {id: word, label: word},
                     ]);
-                    edges.add([{from: data.user.id, to: word}]);
                 }
                 catch (e) {
                 }
-            }
-        });
-
-    }
-
-    function showNewWords(data) {
-
-        console.log(data.user.name);
-        var words = data.text.split(" ");
-        words.forEach(function (word) {
-
-            console.log(word);
-            if (word.length > 5 && word.indexOf("@") === -1 && word.indexOf("http") === -1) {
-                try {
-                    nodes.add([
-                        {id: word, label: word},
-                    ]);
-                    edges.add([{from: 2, to: word}]);
-                }
-                catch (e) {
-                }
+                //
+                edges.add([{from: data.user.id, to: word}]);
             }
         });
     }
+
 
     // Listener for new tweet events
     socket.on('tweet', function (data) {
         showNewTweet(data);
-        showNewWords(data);
     });
 
 });
