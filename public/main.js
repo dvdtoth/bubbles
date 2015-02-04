@@ -2,14 +2,10 @@ $(function () {
 
     var socket = io('http://localhost:8080/');
 
-    // Graph
-    // create an array with nodes
+    // create a dataset for nodes
     var nodes = new vis.DataSet();
-    nodes.add([
-        {id: 1, label: 'Keyword'},
-    ]);
 
-    // create an array with edges
+    // create a dataset for edges
     var edges = new vis.DataSet();
 
     // create a network
@@ -30,10 +26,10 @@ $(function () {
             sectorThreshold: 100,
             screenSizeThreshold: 0.2,
             fontSizeMultiplier: 4.0,
-            maxFontSize: 1000,
+            maxFontSize: 100,
             forceAmplification: 0.1,
             distanceAmplification: 0.1,
-            edgeGrowth: 20,
+            edgeGrowth: 5,
             nodeScaling: {
                 width: 1,
                 height: 1,
@@ -47,8 +43,6 @@ $(function () {
 
     var network = new vis.Network(container, data, options);
 
-    var prev = 1;
-
     var tids = [];
     // Display new node
     function showNewTweet(data) {
@@ -58,30 +52,30 @@ $(function () {
         nodes.update([
             {id: data.user.id, label: data.user.name, image: data.user.profile_image_url, shape: 'image'}
         ]);
-        edges.add([{from: 1, to: data.user.id}]);
+        //edges.add([{from: 1, to: data.user.id}]);
 
-        prev = data.user.id;
-
-        // Add words and connect of users
+        // Add words and connect to users
         var words = data.text.split(" ");
         words.forEach(function (word) {
-
-            console.log(word);
-
+            word = word.replace(/\W+/g, "").toLowerCase();
             if (word.length > 5 && word.indexOf("@") === -1 && word.indexOf("http") === -1) {
-                try {
-                    nodes.add([
-                        {id: word, label: word},
-                    ]);
-                }
-                catch (e) {
-                }
-                //
-                edges.add([{from: data.user.id, to: word}]);
+                nodes.update([
+                    {
+                        id: word, label: word,
+                        color: {
+                            background: randomColor(),
+                            border: randomColor()
+                        }
+                    }
+                ]);
+                edges.update([{from: data.user.id, to: word}]);
             }
         });
     }
 
+    function randomColor() {
+        return "#" + Math.random().toString(16).slice(2, 8);
+    }
 
     // Listener for new tweet events
     socket.on('tweet', function (data) {
