@@ -5,10 +5,17 @@ var io = require('socket.io')(8080);
 var config = require('./config.js');
 var T = new Twit(config.twitter);
 
-var stream = T.stream('statuses/filter', {track: 'superbowl'});
+// take from command
+process.argv.shift();
+process.argv.shift();
+
+var searchfor = process.argv.join(' ');
+
+//console.log(searchfor);
+var stream = T.stream('statuses/filter', {track: searchfor});
 
 stream.on('tweet', function (tweet) {
-    console.log(tweet.user.name);
+    //console.log(tweet.user.name);
     console.log(tweet.text);
     //console.log(tweet.user.location);
 
