@@ -18,6 +18,7 @@
   "homepage": "https://github.com/dvdtoth/bubbles",
   "dependencies": {
     "isotope-layout": "^2.1.0",
+    "natural": "^0.2.0",
     "socket.io": "^1.3.2",
     "twit": "^1.1.19",
     "vis": "^3.9.1",
