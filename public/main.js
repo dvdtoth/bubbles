@@ -47,18 +47,42 @@ $(function () {
     // Display new node
     function showNewTweet(data) {
 
+        console.log(data);
         // Add twitter users with avatar
         tids.push(data.user.id);
         nodes.update([
-            {id: data.user.id, label: data.user.name, image: data.user.profile_image_url, shape: 'image'}
+            {
+                id: data.user.id,
+                label: data.user.name,
+                image: data.user.profile_image_url,
+                shape: 'image'
+            }
         ]);
-        //edges.add([{from: 1, to: data.user.id}]);
+
+        if (data.user.time_zone) {
+            nodes.update([
+                {
+                    id: data.user.time_zone,
+                    label: data.user.time_zone,
+                    color: {
+                        background: '#000000',
+                        border: '#000000'
+                    },
+                    shape: 'star',
+                    radius: 24
+                }
+
+            ]);
+
+            edges.update([{from: data.user.time_zone, to: data.user.id}]);
+
+        }
 
         // Add words and connect to users
         var words = data.text.split(" ");
         words.forEach(function (word) {
             word = word.replace(/\W+/g, "").toLowerCase();
-            if (word.length > 5 && word.indexOf("@") === -1 && word.indexOf("http") === -1) {
+            if (word.length > 3 && word.indexOf("@") === -1 && word.indexOf("http") === -1) {
                 nodes.update([
                     {
                         id: word, label: word,
