@@ -6,7 +6,7 @@ var io = require('socket.io')(config.io.port);
 var Twit = require('twit');
 var T = new Twit(config.twitter);
 
-var natural = require('natural');
+var sentiment = require('./processing/sentiment.js');
 
 // take from command
 process.argv.shift();
@@ -14,9 +14,14 @@ process.argv.shift();
 
 var searchfor = process.argv.join(' ');
 
+// @TODO Add learner stream
+//var learner = T.stream('statuses/filter', {track: word});
+
 var stream = T.stream('statuses/filter', {track: searchfor});
 
 stream.on('tweet', function (tweet) {
+    console.log(tweet.text);
+    sentiment.NaiveBayes(tweet.text);
     io.emit('tweet', tweet);
 });
 
