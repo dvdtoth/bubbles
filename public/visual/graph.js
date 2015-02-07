@@ -60,7 +60,7 @@ function showNewGraphBubble(data) {
     var words = data.text.split(" ");
     words.forEach(function (word) {
         word = word.replace(/\W+/g, "").toLowerCase();
-        if (word.length > 5 && word.indexOf("@") === -1 && word.indexOf("http") === -1) {
+        if (word.indexOf("@") === -1 && word.indexOf("http") === -1) {
             nodes.update([
                 {
                     id: word, label: word,
