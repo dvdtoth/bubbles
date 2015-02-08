@@ -2,9 +2,9 @@
 
 var natural = require('natural');
 
-var sentiment = {};
+var Sentiment = {};
 
-sentiment.NaiveBayes = function(data) {
+Sentiment.NaiveBayes = function(data) {
 
     var sensation = new natural.BayesClassifier();
 
@@ -15,11 +15,13 @@ sentiment.NaiveBayes = function(data) {
     sensation.addDocument('awful destruction', 'negative')
     sensation.addDocument('wonderful suprise', 'positive')
     sensation.addDocument('deadly war', 'negative')
+    sensation.addDocument('make money', 'positive')
+    sensation.addDocument('terrible pain', 'negative')
 
     sensation.train();
 
-    console.log(sensation.classify(data));
+    return sensation.classify(data);
 }
 
 
-module.exports = sentiment;
+module.exports = Sentiment;

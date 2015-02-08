@@ -47,8 +47,9 @@ var container = document.getElementById('graphContainer');
 var network = new vis.Network(container, data, options);
 
 // Display new node
-function showNewGraphBubble(data) {
+function showNewGraphBubble(bubble) {
 
+    data = bubble.data;
     // Add twitter users with avatar
     tids.push(data.user.id);
     nodes.update([
@@ -65,8 +66,8 @@ function showNewGraphBubble(data) {
                 {
                     id: word, label: word,
                     color: {
-                        background: randomColor(),
-                        border: randomColor()
+                        background: bubble.result == 'positive' ? '#00FF00' : '#FF0000',
+                        border: '#000'
                     }
                 }
             ]);

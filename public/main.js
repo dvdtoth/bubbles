@@ -4,9 +4,9 @@ $(function () {
 
     var keyword = '';
 
-    // Listener for new tweet events
-    socket.on('tweet', function (data) {
-        showNewGraphBubble(data);
+    // Listener for new data events
+    socket.on('bubble', function (bubble) {
+        showNewGraphBubble(bubble);
     });
 
     // Get initialization data from server

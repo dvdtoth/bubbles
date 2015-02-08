@@ -6,7 +6,7 @@ var io = require('socket.io')(config.io.port);
 var Twit = require('twit');
 var T = new Twit(config.twitter);
 
-var sentiment = require('./processing/sentiment.js');
+var Processor = require('./processor')
 
 // take from command
 process.argv.shift();
@@ -14,16 +14,19 @@ process.argv.shift();
 
 var searchfor = process.argv.join(' ');
 
-// @TODO Add learner stream
-//var learner = T.stream('statuses/filter', {track: word});
-
 var stream = T.stream('statuses/filter', {track: searchfor});
+var dataProcessor = new Processor();
 
 stream.on('tweet', function (tweet) {
-    console.log(tweet.text);
-    sentiment.NaiveBayes(tweet.text);
-    io.emit('tweet', tweet);
+    dataProcessor.processData('twitter', tweet);
 });
+
+dataProcessor.on('result', function(bubble) {
+    console.log(bubble.source);
+    console.log(bubble.data.text);
+    console.log(bubble.result);
+    io.emit('bubble', bubble);
+})
 
 io.sockets.on('connection', function (socket) {
     console.log("Client connected");
