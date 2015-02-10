@@ -26,3 +26,13 @@ node index.js <search/track term>
 ```
 
 Point your browser to public/index.html
+
+## Testing
+
+```
+npm test
+```
+
+## License
+
+MIT
