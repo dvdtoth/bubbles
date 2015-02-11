@@ -17,6 +17,7 @@ Sentiment.NaiveBayes = function(data) {
     sensation.addDocument('deadly war', 'negative')
     sensation.addDocument('make money', 'positive')
     sensation.addDocument('terrible pain', 'negative')
+    sensation.addDocument('sad sickness', 'negative')
 
     sensation.train();
 

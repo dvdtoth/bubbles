@@ -2,10 +2,11 @@
 
 var should = require('should'),
     ioc = require('socket.io-client'),
-    Processor = require('../processor')
+    Processor = require('../processor'),
+    Sentiment = require('../algorithm/sentiment');
 
 
-describe("The data processor", function () {
+describe("Data processor", function () {
 
     var processor = new Processor;
     var source = Math.random().toString(36).substring(7);
@@ -20,10 +21,10 @@ describe("The data processor", function () {
 
     processor.processData(source, data);
 
-    it('should have the right properties', function() {
+    it('should have the right properties', function () {
 
         procResult.should.have.property('source', source);
-        procResult.should.have.property('result', 'positive' || 'negative');
+        procResult.result.should.not.be.empty;
 
     });
 
@@ -33,4 +34,15 @@ describe("The data processor", function () {
 
     });
 
+});
+
+describe("Sentiment analyzer", function () {
+
+    var sentiment = Sentiment;
+    it('should guess the right sentiment on basic trigger words', function () {
+        var happy = sentiment.NaiveBayes('happy');
+        var sad = sentiment.NaiveBayes('sad');
+        happy.should.be.exactly('positive');
+        sad.should.be.exactly('negative');
+    });
 })
