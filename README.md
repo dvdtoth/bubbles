@@ -1,4 +1,5 @@
-# Bubbles
+# Bubbles [![Build Status](https://travis-ci.org/dvdtoth/bubbles.svg?branch=develop)](https://travis-ci.org/dvdtoth/bubbles)
+
 
 Realtime data analysis and machine intelligence
 
