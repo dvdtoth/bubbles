@@ -8,11 +8,9 @@ var T = new Twit(config.twitter);
 
 var Processor = require('./processor')
 
-// take from command
-process.argv.shift();
-process.argv.shift();
-
-var searchfor = process.argv.join(' ');
+// Command line arguments
+var searchfor = process.argv[2];
+var mood = process.argv[3] || undefined;
 
 var stream = T.stream('statuses/filter', {track: searchfor});
 

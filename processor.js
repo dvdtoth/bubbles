@@ -7,15 +7,19 @@ var events = require('events'),
 
 function Processor() {
     events.EventEmitter.call(this);
+    this.sentiment = new Sentiment;
+    this.sentiment.Learn();
 }
 
 util.inherits(Processor, events.EventEmitter);
 
 Processor.prototype.processData = function (source, data, callback) {
+
     var molecule = {};
+
     molecule.source = source;
     molecule.data = data;
-    molecule.result = Sentiment.NaiveBayes(data.text);
+    molecule.result = this.sentiment.Classify(data.text);
 
     this.emit('result', molecule);
 };

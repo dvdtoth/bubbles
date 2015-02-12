@@ -38,10 +38,15 @@ describe("Data processor", function () {
 
 describe("Sentiment analyzer", function () {
 
-    var sentiment = Sentiment;
+    var sentiment = new Sentiment;
+
     it('should guess the right sentiment on basic trigger words', function () {
-        var happy = sentiment.NaiveBayes('happy');
-        var sad = sentiment.NaiveBayes('sad');
+
+        sentiment.Learn();
+
+        var happy = sentiment.Classify('happy');
+        var sad = sentiment.Classify('sad');
+
         happy.should.be.exactly('positive');
         sad.should.be.exactly('negative');
     });

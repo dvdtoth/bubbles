@@ -2,26 +2,29 @@
 
 var natural = require('natural');
 
-var Sentiment = {};
+function Sentiment() {
+    this.sensation = new natural.BayesClassifier();
+}
 
-Sentiment.NaiveBayes = function(data) {
-
-    var sensation = new natural.BayesClassifier();
+Sentiment.prototype.Learn = function() {
 
     // Add some test data
-    sensation.addDocument('happy birthday', 'positive')
-    sensation.addDocument('terribly sorry', 'negative')
-    sensation.addDocument('amazingly well', 'positive')
-    sensation.addDocument('awful destruction', 'negative')
-    sensation.addDocument('wonderful suprise', 'positive')
-    sensation.addDocument('deadly war', 'negative')
-    sensation.addDocument('make money', 'positive')
-    sensation.addDocument('terrible pain', 'negative')
-    sensation.addDocument('sad sickness', 'negative')
+    this.sensation.addDocument('happy birthday', 'positive')
+    this.sensation.addDocument('terribly sorry', 'negative')
+    this.sensation.addDocument('amazingly well', 'positive')
+    this.sensation.addDocument('awful destruction', 'negative')
+    this.sensation.addDocument('wonderful suprise', 'positive')
+    this.sensation.addDocument('deadly war', 'negative')
+    this.sensation.addDocument('make money', 'positive')
+    this.sensation.addDocument('terrible pain', 'negative')
+    this.sensation.addDocument('sad sickness', 'negative')
 
-    sensation.train();
+    this.sensation.train();
+}
 
-    return sensation.classify(data);
+Sentiment.prototype.Classify = function(data) {
+
+    return this.sensation.classify(data);
 }
 
 
