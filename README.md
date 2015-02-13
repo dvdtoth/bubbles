@@ -23,7 +23,7 @@ npm install
 
 Run the application
 ```
-node index.js <search/track term>
+node index.js '<search/track term>'
 ```
 
 Point your browser to public/index.html
