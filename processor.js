@@ -8,12 +8,13 @@ var events = require('events'),
 function Processor() {
     events.EventEmitter.call(this);
     this.sentiment = new Sentiment;
-    this.sentiment.Learn();
 }
 
 util.inherits(Processor, events.EventEmitter);
 
-Processor.prototype.processData = function (source, data, callback) {
+Processor.prototype.processData = function (source, data, mood) {
+
+    this.sentiment.Learn(data.text, mood);
 
     var molecule = {};
 

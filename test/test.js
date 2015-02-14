@@ -42,7 +42,8 @@ describe("Sentiment analyzer", function () {
 
     it('should guess the right sentiment on basic trigger words', function () {
 
-        sentiment.Learn();
+        sentiment.Learn('happy', 'positive');
+        sentiment.Learn('sad', 'negative');
 
         var happy = sentiment.Classify('happy');
         var sad = sentiment.Classify('sad');

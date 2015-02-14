@@ -17,7 +17,7 @@ var stream = T.stream('statuses/filter', {track: searchfor});
 var dataProcessor = new Processor();
 
 stream.on('tweet', function (tweet) {
-    dataProcessor.processData('twitter', tweet);
+    dataProcessor.processData('twitter', tweet, mood);
 });
 
 dataProcessor.on('result', function(bubble) {
